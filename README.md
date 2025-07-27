@@ -1,118 +1,77 @@
 # トランプゲームの戦争
 
 ## 環境
-  セットアップ : ubuntu24.04
-
-                PHP 8.3.6
+- OS：ubuntu24.04
+- PHP 8.3.6
 
 ## コーディングチェック
   PHP_CodeSnifferを使用
 
 ## ディレクトリ構成
-### QUEST
-  README.md
-
-    lib
-
-      **Step1**
-
-      ・War.php  (オブジェクト指向なし)
-
-      ・WarGame.php
-
-      ・WarGameMain.php
-
-      **Step2**
-
-      ・DeckWarGame.php
-
-      ・Card.php
-
-      ・Game.php
-
-      ・Player.php
-
-      **Step3**
-
-      ・PartyDeckWar.php
-
-      ・Card.php
-
-      ・Game.php
-
-      ・Player.php
-
-      ・HumanPlayer.php
-
-      JokerDeckWar.php
-
-    vendor
-
-    composer.json
-
-    composer.lock
-
+  QUEST/
+├── README.md
+├── lib/
+│   ├── Step1/
+│   │   ├── War.php                # 手続き型（オブジェクト指向なし）
+│   │   ├── WarGame.php
+│   │   └── WarGameMain.php
+│   ├── Step2/
+│   │   ├── DeckWarGame.php
+│   │   ├── Card.php
+│   │   ├── Game.php
+│   │   └── Player.php
+│   ├── Step3/
+│   │   ├── PartyDeckWar.php
+│   │   ├── Card.php
+│   │   ├── Game.php
+│   │   ├── Player.php
+│   │   └── HumanPlayer.php
+│   └── JokerDeckWar.php
+├── vendor/
+├── composer.json
+└── composer.lock
 
 ## Step1
-- クラス
+
+- クラス-メソッド
 
   WarGame
-
-- メソッド
-
-  カードをシャッフルする  mix()
-
-  カードを引く           DrawCard()
-
-  カードを比較する(大小)  CompareCard()
+                カードをシャッフルする  mix()
+                カードを引く           DrawCard()
+                カードを比較する(大小)  CompareCard()
 
 
-## ステップ2
-- クラス
+## Step2
 
-Card・・・・・数値・絵柄のプロパティを定義
+  Card・・・・・数値・絵柄のプロパティを定義
+                シャッフルされたカードを引く    drawCard()
+  Player・・・・カードを獲得する、数えるなど
 
-  シャッフルされたカードを引く    drawCard()
+                カードを獲得する              receiveCards()
 
-Player・・・・カードを獲得する、数えるなど
+                カードをカウントする           countCards()
 
-  カードを獲得する              receiveCards()
-
-  カードをカウントする           countCards()
-
-  手札の先頭からカードを1枚出す   playCard()
+                手札の先頭からカードを1枚出す   playCard()
 
 
-Game・・・・・ループ、引き分け処理、勝敗判定
+  Game・・・・・ループ、引き分け処理、勝敗判定
+                カードを出して表示する    play()
+                カードを比較する(大小)    compareCard()
 
-  カードを出して表示する    play()
+## Step3
+  Card・・・・・・数値・絵柄のプロパティを定義
+                シャッフルされたカードを引く    drawCard()
 
-  カードを比較する(大小) compareCard()
+  Player・・・・・カードを獲得する、数えるなど
+                  カードを獲得する              receiveCards()
+                  カードをカウントする           countCards()
+                  手札の先頭からカードを1枚出す   playCard()
 
-## ステップ3
-Card・・・・・・数値・絵柄のプロパティを定義
+  Game・・・・・・ループ、引き分け処理、勝敗判定
+                  カードを出して表示する                    play()
+                  カードの大小を比較する・引き分けしょりなど  compareCard()
+                  カードの大小で順位付けする                rankSort()
 
-  シャッフルされたカードを引く    drawCard()
+    (※ゲームの流れは play() で回し、compareCard() は「ラウンドの勝敗判定」という役割だけ担うように実装した。play() からラウンドごとに呼ばれる仕組みです。)
 
-Player・・・・・カードを獲得する、数えるなど
-
-  カードを獲得する              receiveCards()
-
-  カードをカウントする           countCards()
-
-  手札の先頭からカードを1枚出す   playCard()
-
-
-Game・・・・・・ループ、引き分け処理、勝敗判定
-
-  カードを出して表示する                    play()
-
-  カードの大小を比較する・引き分けしょりなど  compareCard()
-
-  カードの大小で順位付けする                rankSort()
-
-  (ゲームの流れは play() で回し、compareCard() は「ラウンドの勝敗判定」という役割だけ担うように実装した。
-  
-  play() からラウンドごとに呼ばれる仕組みです。)
-
-HumanPlayer・・・複数人対応できるようにPlayerクラスを継承
+  HumanPlayer・・・複数人対応できるようにPlayerクラスを継承

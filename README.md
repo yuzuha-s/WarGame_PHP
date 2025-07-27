@@ -5,73 +5,98 @@
 - PHP 8.3.6
 
 ## コーディングチェック
-  PHP_CodeSnifferを使用
+    PHP_CodeSnifferを使用
 
 ## ディレクトリ構成
-  QUEST/
+QUEST/
+
 ├── README.md
+
 ├── lib/
-│   ├── Step1/
-│   │   ├── War.php                # 手続き型（オブジェクト指向なし）
-│   │   ├── WarGame.php
-│   │   └── WarGameMain.php
-│   ├── Step2/
-│   │   ├── DeckWarGame.php
-│   │   ├── Card.php
-│   │   ├── Game.php
-│   │   └── Player.php
-│   ├── Step3/
-│   │   ├── PartyDeckWar.php
-│   │   ├── Card.php
-│   │   ├── Game.php
-│   │   ├── Player.php
-│   │   └── HumanPlayer.php
-│   └── JokerDeckWar.php
+
+│ ├── Step1/
+
+│ │ ├── War.php # 手続き型（オブジェクト指向なし）
+
+│ │ ├── WarGame.php
+
+│ │ └── WarGameMain.php
+
+│ ├── Step2/
+
+│ │ ├── DeckWarGame.php
+
+│ │ ├── Card.php
+
+│ │ ├── Game.php
+
+│ │ └── Player.php
+
+│ ├── Step3/
+
+│ │ ├── PartyDeckWar.php
+
+│ │ ├── Card.php
+
+│ │ ├── Game.php
+
+│ │ ├── Player.php
+
+│ │ └── HumanPlayer.php
+
+│ └── JokerDeckWar.php
+
 ├── vendor/
+
 ├── composer.json
+
 └── composer.lock
 
-## Step1
+## 各ステップの概要
+### Step1
 
-- クラス-メソッド
+- **WarGame**
+  - `mix()`：カードをシャッフル
+  - `DrawCard()`：カードを引く
+  - `CompareCard()`：カードを比較
 
-  WarGame
-                カードをシャッフルする  mix()
-                カードを引く           DrawCard()
-                カードを比較する(大小)  CompareCard()
-
-
-## Step2
-
-  Card・・・・・数値・絵柄のプロパティを定義
-                シャッフルされたカードを引く    drawCard()
-  Player・・・・カードを獲得する、数えるなど
-
-                カードを獲得する              receiveCards()
-
-                カードをカウントする           countCards()
-
-                手札の先頭からカードを1枚出す   playCard()
+---
 
 
-  Game・・・・・ループ、引き分け処理、勝敗判定
-                カードを出して表示する    play()
-                カードを比較する(大小)    compareCard()
+### Step2
+- **Card**
+  - 数値・絵柄のプロパティを定義
+  - `drawCard()`：シャッフル済みのカードから引く
 
-## Step3
-  Card・・・・・・数値・絵柄のプロパティを定義
-                シャッフルされたカードを引く    drawCard()
+- **Player**
+  - `receiveCards()`：カードを獲得する
+  - `countCards()`：手札枚数を数える
+  - `playCard()`：手札の先頭からカードを出す
 
-  Player・・・・・カードを獲得する、数えるなど
-                  カードを獲得する              receiveCards()
-                  カードをカウントする           countCards()
-                  手札の先頭からカードを1枚出す   playCard()
+- **Game**
+  - `play()`：ゲーム全体の進行
+  - `compareCard()`：カードの大小を比較、引き分け処理含む
 
-  Game・・・・・・ループ、引き分け処理、勝敗判定
-                  カードを出して表示する                    play()
-                  カードの大小を比較する・引き分けしょりなど  compareCard()
-                  カードの大小で順位付けする                rankSort()
+---
 
-    (※ゲームの流れは play() で回し、compareCard() は「ラウンドの勝敗判定」という役割だけ担うように実装した。play() からラウンドごとに呼ばれる仕組みです。)
+### Step3
+  - **Card**
+  - 数値・絵柄のプロパティを定義
+  - `drawCard()`：シャッフル済みのカードから引く
 
-  HumanPlayer・・・複数人対応できるようにPlayerクラスを継承
+- **Player**
+  - `receiveCards()`：カードを獲得する
+  - `countCards()`：カードの枚数をカウント
+  - `playCard()`：カードを1枚出す
+
+- **Game**
+  - `play()`：ゲーム全体の進行を担当
+  - `compareCard()`：1ラウンドの勝敗判定のみを行う
+  - `rankSort()`：カードの強さ順に並べる（順位付け用）
+
+> ※ `play()` の中で `compareCard()` をラウンドごとに呼び出し、勝敗を管理する構造
+
+- **HumanPlayer**
+  - `Player` を継承して、複数人でのプレイに対応
+
+---

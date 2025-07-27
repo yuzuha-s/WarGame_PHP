@@ -1,0 +1,21 @@
+{
+    "name": "root/html",
+    "version": "1.0.0",
+    "require": {},
+    "require-dev": {
+        "squizlabs/php_codesniffer": "3.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "QUEST\\": "QUEST/lib/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "license": "proprietary",
+    "minimum-stability": "stable"
+}

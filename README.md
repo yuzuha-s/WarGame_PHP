@@ -28,7 +28,13 @@ QUEST/
 │ │ ├── Game.php
 │ │ ├── Player.php
 │ │ └── HumanPlayer.php
-│ └── JokerDeckWar.php
+| ├── Step4/
+│ | ├── JokerDeckWar.php
+| | ├── Card.php
+| | ├── JokerCard.php
+| | ├── Game.php
+| | ├── Player.php
+| | └── HumanPlayer.php
 ├── vendor/
 ├── composer.json
 └── composer.lock
@@ -56,15 +62,8 @@ QUEST/
   - `compareCard()`：カードの大小を比較、引き分け処理含む
 
 ### Step3
-  - **Card・・・数値・絵柄のプロパティを定義 シャッフルされたカードを引く**
-    - `drawCard()`：シャッフル済みのカードから引く
 
-- **Player・・・カードを獲得する、数えるなど**
-  - `receiveCards()`：カードを獲得する
-  - `countCards()`：カードの枚数をカウント
-  - `playCard()`：カードを1枚出す
-
-- **Game・・・ループ、引き分け処理、勝敗判定 カードを出して表示する**
+- **Game・・・勝敗判定の強化 ジョーカー＞スペードのA ＞その他のカード**
   - `play()`：ゲーム全体の進行を担当
   - `compareCard()`：1ラウンドの勝敗判定のみを行う
   - `rankSort()`：カードの強さ順に並べる（順位付け用）
@@ -72,3 +71,9 @@ QUEST/
      ※ `play()` の中で `compareCard()` をラウンドごとに呼び出し、勝敗を管理する構造
 
 - **HumanPlayer・・・複数人対応できるようにPlayerクラスを継承**
+
+### Step4
+- **Game・・・ループ、引き分け処理、勝敗判定 カードを出して表示する**
+    - `cardStrong()`：ジョーカー＞スペードのA＞それ以外の順で強さを判定し、比較処理をまとめてusortで使うためのメソッドにする
+- **JokerCard・・・Cardクラスを継承してジョーカーを追加する**
+
